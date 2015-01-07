@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     uglify : {
       options : {
         banner : grunt.file.read("header.txt"),
-        compress : true
+        compress : true,
         mangle : true,
         preserveComments : false,
         report : 'gzip'

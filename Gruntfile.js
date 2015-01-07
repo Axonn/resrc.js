@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg : grunt.file.readJSON('package.json'),
-    version : '0.9.1',
+    version : '0.9.2',
     srcPath : 'src/resrc.js',
     distPath : 'dist/resrc-<%= version %>.min.js',
     jshint : {
@@ -13,7 +13,7 @@ module.exports = function (grunt) {
     uglify : {
       options : {
         banner : grunt.file.read("header.txt"),
-        compress : true,
+        compress : true
         mangle : true,
         preserveComments : false,
         report : 'gzip'

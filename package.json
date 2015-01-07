@@ -7,7 +7,7 @@
   "license": "GPL-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/resrcit/resrc.js.git"
+    "url": "https://github.com/axonn/resrc.js.git"
   },
   "dependencies": {
     "grunt": "~0.4.5"

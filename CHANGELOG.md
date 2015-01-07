@@ -1,3 +1,6 @@
+## 0.9.1 alpha
+* Added support for Axonn Ketto web service. Server=*.ketto.co.uk instead of Server=*resrc.it
+
 ## Latest Release: 0.9.1
 
 * Removed getAttribute("resrc") from the getImgSrc() function. This was causing an error in Internet Explorer 8 and below.

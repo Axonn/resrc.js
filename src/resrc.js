@@ -617,6 +617,7 @@
    * @returns {object}
    */
   var getResrcImageObject = function (elem) {
+ 
     // Declare the final resrc image path.
     var resrcImgPath;
     // Declare an empty array to store the resrc api url params inside.
@@ -635,14 +636,24 @@
     var elementPixelHeight = pixelRound(elementSizeObj.height * zoomMultiplier, pixelRounding);
     // Declare the resrc server.
     var resrcServer = getServer(elem);
-    // Declare the resrc full image path.
+	// Is the server Axonn Ketto
+	var isServerKetto = (resrcServer.indexOf("ketto") === -1) ? false : true; 
+	// Declare the resrc full image path.
     var resrcPathFull = parseSrcToUniformFormat(getImgSrc(elem), resrcServer);
     // Declare the resrc path prefix.
     var resrcPathPrefix = getResrcPathPrefix(resrcPathFull);
     // Declare any existing resrc api params and make them lowercase.
     var resrcPathParams = parseUri(resrcPathPrefix).directory.toLowerCase().substring(1);
     // Declare the size param "s=". This value is either a width or a height depending which is larger.
-    var resrcSizeParam = elementPixelHeight <= elementPixelWidth === true ? setParameterAndValue("s","w"+ elementPixelWidth + ",pd" + dpi) : setParameterAndValue("s","h"+ elementPixelHeight + ",pd" + dpi);
+    var resrcSizeParam;
+	if (isServerKetto) 
+	{
+		resrcSizeParam = elementPixelHeight <= elementPixelWidth === true ? setParameterAndValue("scale","*x" + elementPixelWidth) : setParameterAndValue("scale", elementPixelHeight + "x*");
+	}
+	else
+	{
+		resrcSizeParam = elementPixelHeight <= elementPixelWidth === true ? setParameterAndValue("s","w"+ elementPixelWidth + ",pd" + dpi) : setParameterAndValue("s","h"+ elementPixelHeight + ",pd" + dpi);
+	}
     // Declare the fallback image url.
     var fallbackImgURL = getRemoteImageURL(resrcPathFull);
     // [A.] If there are existing resrc api parameters in the url, then...
@@ -696,10 +707,20 @@
       // Add the resrc optimization parameter to the resrc param array.
       resrcParamArr.push(setParameterAndValue("o", options.imageQuality));
     }
-    // set the resrcPathParams to be a string of the resrc param array, joined together using an "/" sign as the separator.
-    resrcPathParams = resrcParamArr.join("/");
-    // Set the final resrc image path.
-    resrcImgPath = getProtocol(options.ssl) + resrcServer + "/" + resrcPathParams + "/" + fallbackImgURL;
+    
+    
+	if (isServerKetto) 
+	{
+		resrcPathParams = resrcParamArr.join("&");
+		resrcImgPath = getProtocol(options.ssl) + resrcServer + "?" + resrcPathParams ;
+	} 
+	else 
+	{
+		// set the resrcPathParams to be a string of the resrc param array, joined together using an "/" sign as the separator.
+		resrcPathParams = resrcParamArr.join("/");
+		// Set the final resrc image path.
+		resrcImgPath = getProtocol(options.ssl) + resrcServer + "/" + resrcPathParams + "/" + fallbackImgURL;
+	}
     // Return the resrc image object.
     return {
       resrcImgPath : resrcImgPath,
@@ -711,6 +732,8 @@
     };
   };
 
+  
+  
 
   /**
    * Replace the image source of the element.

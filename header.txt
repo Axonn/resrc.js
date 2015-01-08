@@ -2,5 +2,10 @@
  * ReSRCit v0.9.1
  * http://www.resrc.it
  * Copyright (C) 2014 ReSRC Ltd.
+ *
+ * v0.9.2
+ * http://www.axonn.co.uk
+ * Copyright (C) 2015 Axonn Media Ltd.
+ * Added support for Ketto server
  */
 

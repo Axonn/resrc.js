@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
   grunt.initConfig({
     pkg : grunt.file.readJSON('package.json'),
-    version : '0.9.2',
     srcPath : 'src/resrc.js',
     distPath : 'dist/resrc-<%= version %>.min.js',
     jshint : {

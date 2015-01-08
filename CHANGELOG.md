@@ -1,4 +1,4 @@
-## 0.9.2
+## 0.9.3
 * Added support for Axonn Ketto web service. Server=*.ketto.co.uk instead of Server=*resrc.it
 
 ## Latest Release: 0.9.1

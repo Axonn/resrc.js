@@ -609,6 +609,17 @@
         loaded ? fn() : fns.push(fn);
       });
   }();
+  
+  /*
+   * Get relative URL of fallback image
+   *
+   * @param src
+   * @returns {string}
+   */
+  var getFallbackImgRelUrl = function(src) {
+	var parsedUri = parseUri(src);
+	return parsedUri.relative;
+  }
 
 
   /**
@@ -638,14 +649,19 @@
     var resrcServer = getServer(elem);
 	// Is the server Axonn Ketto
 	var isServerKetto = (resrcServer.indexOf("ketto") === -1) ? false : true; 
+	// Declare image src i.e. original URL
+	var imgSrc = getImgSrc(elem);
 	// Declare the resrc full image path.
-    var resrcPathFull = parseSrcToUniformFormat(getImgSrc(elem), resrcServer);
+    var resrcPathFull = parseSrcToUniformFormat(imgSrc, resrcServer);
     // Declare the resrc path prefix.
     var resrcPathPrefix = getResrcPathPrefix(resrcPathFull);
     // Declare any existing resrc api params and make them lowercase.
     var resrcPathParams = parseUri(resrcPathPrefix).directory.toLowerCase().substring(1);
     // Declare the size param "s=". This value is either a width or a height depending which is larger.
     var resrcSizeParam;
+	// Declare img src relative URL
+	var fallbackImgRelUrl = getFallbackImgRelUrl(imgSrc);
+		
 	if (isServerKetto) 
 	{
 		resrcSizeParam = elementPixelHeight <= elementPixelWidth === true ? setParameterAndValue("scale","*x" + elementPixelWidth) : setParameterAndValue("scale", elementPixelHeight + "x*");
@@ -712,7 +728,7 @@
 	if (isServerKetto) 
 	{
 		resrcPathParams = resrcParamArr.join("&");
-		resrcImgPath = getProtocol(options.ssl) + resrcServer + "?" + resrcPathParams ;
+		resrcImgPath = getProtocol(options.ssl) + resrcServer + fallbackImgRelUrl + "?" + resrcPathParams ;
 	} 
 	else 
 	{

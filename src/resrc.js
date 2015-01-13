@@ -618,7 +618,7 @@
    */
   var getFallbackImgRelUrl = function(src) {
 	var parsedUri = parseUri(src);
-	return parsedUri.relative;
+	return parsedUri.path;
   };
 
 

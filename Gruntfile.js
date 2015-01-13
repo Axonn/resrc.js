@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
-  var test, s3folderPrefix, pkg, folderPath, aws;
+  var test, s3folderPrefix, pkg, folderPath, aws, miniFilename;
   pkg = grunt.file.readJSON('package.json');
   test = grunt.option('test') || false;
     if (test) {
@@ -11,16 +11,15 @@ module.exports = function (grunt) {
     }
     aws = grunt.file.readJSON('aws-keys.json');
 	
-  
+  miniFilename = 'resrc-' + pkg.version + '.min.js';
   
   grunt.initConfig({
-	clean: ['.dist', '.tmp'],	
+	clean: ['dist', '.tmp'],	
     pkg : pkg,
     version : pkg.version,
     srcPath : 'src/resrc.js',
-    distPath : 'dist/resrc-<%= version %>.min.js',
-	
-	
+	distPath : 'dist/' + miniFilename,
+    tempPath : '.tmp/' + miniFilename,
     jshint : {
       options : {
         jshintrc : ".jshintrc"
@@ -33,13 +32,26 @@ module.exports = function (grunt) {
         compress : true,
         mangle : true,
         preserveComments : false,
-        report : 'gzip'
+        report : 'min'
       },
       build : {
         files : {
-          '<%= distPath %>' : ['<%= srcPath %>']
+          '<%= tempPath %>' : ['<%= srcPath %>']
         }
       }
+    },
+	compress: {
+		dist: {
+			options: {
+				mode: 'gzip'
+			},
+			files: [{
+				expand: true,
+				cwd: '.tmp',
+				src: miniFilename,
+				dest: 'dist',
+			}]
+		}
     },
     watch : {
       scripts : {
@@ -50,7 +62,8 @@ module.exports = function (grunt) {
     },
 	release: {
         options: {
-             npm: false
+             npm: false,
+			 tagName: 'v<%= version %>'
         }
     },
 	aws_s3: {
@@ -72,8 +85,8 @@ module.exports = function (grunt) {
 						ContentEncoding: 'gzip',
 					},
 					expand: true,
-					cwd: '.dist/',
-					src: '<%= distPath %>',
+					cwd: 'dist/',
+					src: miniFilename,
 					dest: folderPath
 				}
 			]
@@ -85,7 +98,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('default', ['build']);
-  grunt.registerTask('build', ['clean', 'jshint', 'uglify']);
+  grunt.registerTask('build', ['clean', 'jshint', 'uglify', 'compress']);
   grunt.registerTask('push', ['build', 'aws_s3']);
   grunt.loadNpmTasks('grunt-release');
 };

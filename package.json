@@ -2,7 +2,7 @@
   "name": "resrc.js",
   "description": "A JavaScript library for pixel perfect images on demand.",
   "homepage": "https://github.com/resrcit/resrc.js/",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "Axonn (https://github.com/Axonn)",
   "license": "GPL-2.0",
   "repository": {
@@ -20,6 +20,6 @@
     "grunt-contrib-clean": "~0.6.0",
     "load-grunt-tasks": "~1.0.0",
     "grunt-release": "^0.9.0",
-	"grunt-aws-s3": "~0.9.4"
+    "grunt-aws-s3": "~0.9.4"
   }
 }

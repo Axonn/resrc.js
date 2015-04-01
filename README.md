@@ -4,9 +4,9 @@
 ==========================================================================
 
 resrc.js is a small, mobile friendly *(1.5kb in file size - Minified and Gzipped)* responsive image JavaScript library that produces pixel perfect images on demand.
-The library requires your images to be served via [ReSRC](http://www.resrc.it) - The Responsive Image Service. Link your images to our simple service and let us take care of everything!
 
-Register your domain for a [FREE TRIAL](http://www.resrc.it/signup).
+The library requires your images to be served via [ReSRC](http://www.resrc.it) or Axonn Ketto (not a public service) - The Responsive Image Service. Link your images to our simple service and let us take care of everything!
+
 
 ## Features
 

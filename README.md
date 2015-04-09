@@ -7,6 +7,19 @@ resrc.js is a small, mobile friendly *(1.5kb in file size - Minified and Gzipped
 
 The library requires your images to be served via [ReSRC](http://www.resrc.it) or Axonn Ketto (not a public service) - The Responsive Image Service. Link your images to our simple service and let us take care of everything!
 
+###Deployment
+#####Test deployment
+- Add **aws-keys.json** file to root with your aws access key and secret key. This file is in the gitignore so will not be included in the repo. Refer to aws-keys.sample.json for an example
+- Run ```npm install```
+- Increment package.json version number appropriately 
+- Run ```grunt push -test```
+	- Grunt push will build and push to s3 [bucket]/**test**/resrc-x.x.x.min.js. If you want to just build run ```grunt build```.
+
+#####Production deployment
+
+- As above but run ```grunt release``` to increment package.json, tag version, commit and push to repo. 
+- ```grunt push``` without test flag
+
 
 ## Features
 

@@ -2,7 +2,7 @@
   "name": "resrc.js",
   "description": "A JavaScript library for pixel perfect images on demand.",
   "homepage": "https://github.com/resrcit/resrc.js/",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "author": "Axonn (https://github.com/Axonn)",
   "license": "GPL-2.0",
   "repository": {
